@@ -1,0 +1,6 @@
+[submodule "external/chk_core"]
+	path = external/chk_core
+	url = https://github.com/chikinrasshu/core
+[submodule "external/glad"]
+	path = external/glad
+	url = https://github.com/Dav1dde/glad
