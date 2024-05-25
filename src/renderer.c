@@ -35,6 +35,13 @@ bool chk_renderer_create(Renderer* r, RendererConfig* c) {
     r->kind     = c->kind;
     r->impl_win = c->win_impl;
 
+    r->name = "Unknown";
+    switch (r->kind) {
+        case RendererKind_Null: r->name = "NullGfx"; break;
+        case RendererKind_Soft: r->name = "SoftGfx"; break;
+        case RendererKind_OpenGL: r->name = "OpenGL"; break;
+    }
+
     if (!chk_arena_create(&r->cmds, chk_kilobytes(256))) { return false; }
 
     switch (r->kind) {
@@ -48,6 +55,8 @@ bool chk_renderer_create(Renderer* r, RendererConfig* c) {
             if (!chk_renderer_gl_create(r, c)) { return false; }
         } break;
     }
+
+    chk_info_f("Renderer", "Created %s Renderer", r->name);
 
     return true;
 }
@@ -66,6 +75,8 @@ bool chk_renderer_destroy(Renderer* r) {
             if (!chk_renderer_gl_destroy(r)) { return false; }
         } break;
     }
+
+    chk_info_f("Renderer", "Destroyed %s Renderer", r->name);
 
     *r = (Renderer){};
 

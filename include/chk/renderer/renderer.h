@@ -81,6 +81,8 @@ typedef struct Renderer {
     RendererBindings fn;
     Arena            cmds;
 
+    const char* name;
+
     void* impl;
     void* impl_ex;
     void* impl_win;
