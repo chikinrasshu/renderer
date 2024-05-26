@@ -41,8 +41,6 @@ typedef struct RenderCmdBase {
 
 typedef struct RenderCmdClear {
     RenderCmdBase base;
-
-    Rect viewport;
 } RenderCmdClear;
 
 typedef struct RenderCmdLine {
@@ -76,10 +74,15 @@ typedef struct RendererBindings {
     RendererFnTriangle* triangle;
 } RendererBindings;
 
+typedef struct RendererCmds {
+    Arena arena;
+    U32   count;
+} RendererCmds;
+
 typedef struct Renderer {
     RendererKind     kind;
     RendererBindings fn;
-    Arena            cmds;
+    RendererCmds     cmds;
 
     const char* name;
 
@@ -94,10 +97,10 @@ bool chk_renderer_destroy(Renderer* r);
 bool chk_renderer_begin(Renderer* r);
 bool chk_renderer_end(Renderer* r);
 
-bool chk_renderer_clear(Renderer* r, Rect viewport, RGBA col);
+bool chk_renderer_clear(Renderer* r, RGBA col);
 bool chk_renderer_line(Renderer* r, V2 a, V2 b, RGBA col);
 bool chk_renderer_triangle(Renderer* r, V2 a, V2 b, V2 c, RGBA col);
 
-bool chk_renderer_clear_packed(Renderer* r, Rect viewport, U32 col);
+bool chk_renderer_clear_packed(Renderer* r, U32 col);
 bool chk_renderer_line_packed(Renderer* r, V2 a, V2 b, U32 col);
 bool chk_renderer_triangle_packed(Renderer* r, V2 a, V2 b, V2 c, U32 col);
